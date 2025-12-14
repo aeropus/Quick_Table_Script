@@ -29,53 +29,7 @@ coordinate h:2;w:3 { color:lime; }
 </qts-style>
 </qts>
 
-<script>
-(function(){
-  function parseQTS(qtsEl){
-    const raw = qtsEl.innerHTML;
-
-    // Grid
-    const gridMatch = raw.match(/grid\s+h:(\d+);w:(\d+)/i);
-    if(!gridMatch) return;
-    const w = +gridMatch[2];
-
-    // Content
-    const contentMatch = raw.match(/<qts-content>([\s\S]*?)<\/qts-content>/i);
-    if(!contentMatch) return;
-    const rows = contentMatch[1].trim().split("\n").map(r=>r.split(";").map(c=>c.replace(/[\[\]]/g,"").trim()).filter(Boolean));
-
-    // Grid erstellen
-    const grid = document.createElement("div");
-    grid.className = "qts-grid";
-    grid.style.gridTemplateColumns = `repeat(${w},1fr)`;
-
-    rows.forEach((row,y)=>{
-      row.forEach((cell,x)=>{
-        const div = document.createElement("div");
-        div.className = `qts-cell h${y+1} w${x+1}`;
-        div.textContent = cell;
-        grid.appendChild(div);
-      });
-    });
-
-    // Styles
-    const styleMatch = raw.match(/<qts-style>([\s\S]*?)<\/qts-style>/i);
-    if(styleMatch){
-      const styleEl = document.createElement("style");
-      styleEl.textContent = styleMatch[1].replace(/coordinate\s+h:(\*|\d+);w:(\*|\d+)/gi, (_,hVal,wVal)=>
-        `.qts-cell${hVal==="*"?"":".h"+hVal}${wVal==="*"?"":".w"+wVal}`
-      );
-      document.head.appendChild(styleEl);
-    }
-
-    qtsEl.replaceWith(grid);
-  }
-
-  document.addEventListener("DOMContentLoaded",()=>{
-    document.querySelectorAll("qts").forEach(parseQTS);
-  });
-
-})();
+<script src="https://quick-table-script.vercel.app/qts.js">
 </script>
 
 </body>
