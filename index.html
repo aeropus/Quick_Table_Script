@@ -2,7 +2,8 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>Aeropus QTS – Infoseite</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aeropus QTS – Infoseite / Info Page</title>
 <style>
   body { font-family: system-ui, sans-serif; background:#121212; color:#eee; padding:20px; line-height:1.6; }
   h1, h2 { color:#fff; }
@@ -11,27 +12,35 @@
   .qts-grid { margin:10px 0; }
   .copy-btn { margin:5px 0; padding:4px 8px; border:none; border-radius:4px; cursor:pointer; background:#333; color:#eee; }
   .copy-btn:hover { background:#555; }
+  .lang-switch { margin-bottom:15px; }
+  .lang-switch button { margin-right:5px; }
+  .lang { display:none; }
+  .lang.active { display:block; }
 </style>
 </head>
 <body>
 
-<h1>Aeropus QTS – Quick Table Grid Scripts</h1>
+<div class="lang-switch">
+  <button onclick="switchLang('de')">DE</button>
+  <button onclick="switchLang('en')">EN</button>
+</div>
 
-<p>
-QTS ermöglicht es dir, Tabellen und Grids schnell und einfach in HTML zu erstellen – direkt im Dokument mit <code>&lt;qts&gt;</code> oder per Inline-Skript.
-</p>
+<!-- Deutsch -->
+<div class="lang de active">
+  <h1>Aeropus QTS – Quick Table Grid Scripts</h1>
+  <p>QTS ermöglicht es dir, Tabellen und Grids schnell und einfach in HTML zu erstellen – direkt im Dokument mit <code>&lt;qts&gt;</code> oder per Inline-Skript.</p>
 
-<h2>Anleitung</h2>
-<ol>
-  <li>Füge einen <code>&lt;qts&gt;</code>-Block in dein HTML ein.</li>
-  <li>Definiere die Gridgröße: <code>grid h:ZEILEN;w:SPALTEN</code></li>
-  <li>Fülle die Zellen im <code>&lt;qts-content&gt;</code>-Block. Jede Zeile endet mit <code>;</code></li>
-  <li>Optional: Style bestimmte Zellen mit <code>&lt;qts-style&gt;</code> und Koordinaten <code>h:X;w:Y</code></li>
-  <li>Füge das Inline-Skript ein (unten auf der Seite)</li>
-</ol>
+  <h2>Anleitung</h2>
+  <ol>
+    <li>Füge einen <code>&lt;qts&gt;</code>-Block in dein HTML ein.</li>
+    <li>Definiere die Gridgröße: <code>grid h:ZEILEN;w:SPALTEN</code></li>
+    <li>Fülle die Zellen im <code>&lt;qts-content&gt;</code>-Block. Jede Zeile endet mit <code>;</code></li>
+    <li>Optional: Style bestimmte Zellen mit <code>&lt;qts-style&gt;</code> und Koordinaten <code>h:X;w:Y</code></li>
+    <li>Füge das Inline-Skript ein (unten auf der Seite)</li>
+  </ol>
 
-<h2>Beispiel</h2>
-<pre><code>&lt;qts&gt;
+  <h2>Beispiel</h2>
+  <pre><code>&lt;qts&gt;
 grid h:2;w:3
 
 &lt;qts-content&gt;
@@ -45,11 +54,46 @@ coordinate h:2;w:3 { color:lime; }
 &lt;/qts-style&gt;
 &lt;/qts&gt;
 </code></pre>
+  <button class="copy-btn" onclick="copyCode(this)">Code kopieren</button>
 
-<button class="copy-btn" onclick="copyCode(this)">Code kopieren</button>
+  <h2>Ergebnis</h2>
+</div>
 
-<h2>Ergebnis</h2>
+<!-- Englisch -->
+<div class="lang en">
+  <h1>Aeropus QTS – Quick Table Grid Scripts</h1>
+  <p>QTS lets you quickly create tables and grids in HTML – directly in the document with <code>&lt;qts&gt;</code> or via inline script.</p>
 
+  <h2>Instructions</h2>
+  <ol>
+    <li>Add a <code>&lt;qts&gt;</code> block in your HTML.</li>
+    <li>Define grid size: <code>grid h:ROWS;w:COLUMNS</code></li>
+    <li>Fill cells inside <code>&lt;qts-content&gt;</code>. Each row ends with <code>;</code></li>
+    <li>Optional: Style specific cells with <code>&lt;qts-style&gt;</code> and coordinates <code>h:X;w:Y</code></li>
+    <li>Include the inline script (at the end of the page)</li>
+  </ol>
+
+  <h2>Example</h2>
+  <pre><code>&lt;qts&gt;
+grid h:2;w:3
+
+&lt;qts-content&gt;
+[Name];[Age];[Status];
+[Luković];[27];[Online];
+&lt;/qts-content&gt;
+
+&lt;qts-style&gt;
+coordinate h:1;w:* { font-weight:bold; background:#111; color:white; }
+coordinate h:2;w:3 { color:lime; }
+&lt;/qts-style&gt;
+&lt;/qts&gt;
+</code></pre>
+  <button class="copy-btn" onclick="copyCode(this)">Copy code</button>
+
+  <h2>Output</h2>
+</div>
+
+<!-- Beispiel QTS-Grid -->
 <qts>
 grid h:2;w:3
 
@@ -64,84 +108,21 @@ coordinate h:2;w:3 { color:lime; }
 </qts-style>
 </qts>
 
-<h2>Inline-Skript zum Kopieren</h2>
-<pre><code>
-(function () {
-
-  function parseQTS(qtsEl) {
-    const raw = qtsEl.innerText;
-
-    const gridMatch = raw.match(/grid\s+h:(\d+);w:(\d+)/i);
-    if (!gridMatch) return;
-    const h = Number(gridMatch[1]);
-    const w = Number(gridMatch[2]);
-
-    const contentMatch = raw.match(/<qts-content>([\s\S]*?)<\/qts-content>/i);
-    if (!contentMatch) return;
-    const content = contentMatch[1]
-      .trim()
-      .split("\n")
-      .map(r => r.split(";").map(c => c.replace(/[\[\]]/g,"").trim()).filter(c => c.length > 0));
-
-    const grid = document.createElement("div");
-    grid.style.display = "grid";
-    grid.style.gridTemplateColumns = `repeat(${w}, 1fr)`;
-    grid.style.gap = "6px";
-
-    content.forEach((row, y) => {
-      row.forEach((cell, x) => {
-        const d = document.createElement("div");
-        d.className = `qts-cell h${y+1} w${x+1}`;
-        d.textContent = cell;
-        d.style.padding = "6px 10px";
-        d.style.borderRadius = "6px";
-        d.style.background = "#1e1e1e";
-        d.style.color = "#eee";
-        d.style.textAlign = "center";
-        grid.appendChild(d);
-      });
-    });
-
-    const styleMatch = raw.match(/<qts-style>([\s\S]*?)<\/qts-style>/i);
-    if (styleMatch) {
-      const style = document.createElement("style");
-      style.innerHTML = styleMatch[1]
-        .replace(/coordinate\s+h:(\*|\d+);w:(\*|\d+)/gi, (_, hh, ww) =>
-          `.qts-cell${hh==="*"?"":".h"+hh}${ww==="*"?"":".w"+ww}`
-        );
-      document.head.appendChild(style);
-    }
-
-    qtsEl.replaceWith(grid);
-  }
-
-  function parseAllQTS() {
-    document.querySelectorAll("qts").forEach(parseQTS);
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", parseAllQTS);
-  } else {
-    parseAllQTS();
-  }
-
-})();
-</code></pre>
-
-<button class="copy-btn" onclick="copyCode(this)">Skript kopieren</button>
-
+<!-- Inline-Skript -->
 <script>
-function copyCode(button) {
-  const code = button.previousElementSibling.querySelector("code").innerText;
-  navigator.clipboard.writeText(code).then(() => {
-    alert("Code kopiert!");
-  });
+function switchLang(lang) {
+  document.querySelectorAll('.lang').forEach(el=>el.classList.remove('active'));
+  document.querySelector('.'+lang).classList.add('active');
 }
-  (function () {
 
+function copyCode(button){
+  const code = button.previousElementSibling.querySelector('code')?.innerText || button.previousElementSibling.innerText;
+  navigator.clipboard.writeText(code).then(()=>alert(lang==='en'?"Code copied!":"Code kopiert!"));
+}
+
+(function () {
   function parseQTS(qtsEl) {
     const raw = qtsEl.innerText;
-
     const gridMatch = raw.match(/grid\s+h:(\d+);w:(\d+)/i);
     if (!gridMatch) return;
     const h = Number(gridMatch[1]);
@@ -149,26 +130,25 @@ function copyCode(button) {
 
     const contentMatch = raw.match(/<qts-content>([\s\S]*?)<\/qts-content>/i);
     if (!contentMatch) return;
-    const content = contentMatch[1]
-      .trim()
+    const content = contentMatch[1].trim()
       .split("\n")
-      .map(r => r.split(";").map(c => c.replace(/[\[\]]/g,"").trim()).filter(c => c.length > 0));
+      .map(r=>r.split(";").map(c=>c.replace(/[\[\]]/g,"").trim()).filter(c=>c));
 
     const grid = document.createElement("div");
     grid.style.display = "grid";
     grid.style.gridTemplateColumns = `repeat(${w}, 1fr)`;
     grid.style.gap = "6px";
 
-    content.forEach((row, y) => {
-      row.forEach((cell, x) => {
+    content.forEach((row,y)=>{
+      row.forEach((cell,x)=>{
         const d = document.createElement("div");
-        d.className = `qts-cell h${y+1} w${x+1}`;
-        d.textContent = cell;
-        d.style.padding = "6px 10px";
-        d.style.borderRadius = "6px";
-        d.style.background = "#1e1e1e";
-        d.style.color = "#eee";
-        d.style.textAlign = "center";
+        d.className=`qts-cell h${y+1} w${x+1}`;
+        d.textContent=cell;
+        d.style.padding="6px 10px";
+        d.style.borderRadius="6px";
+        d.style.background="#1e1e1e";
+        d.style.color="#eee";
+        d.style.textAlign="center";
         grid.appendChild(d);
       });
     });
@@ -176,10 +156,8 @@ function copyCode(button) {
     const styleMatch = raw.match(/<qts-style>([\s\S]*?)<\/qts-style>/i);
     if (styleMatch) {
       const style = document.createElement("style");
-      style.innerHTML = styleMatch[1]
-        .replace(/coordinate\s+h:(\*|\d+);w:(\*|\d+)/gi, (_, hh, ww) =>
-          `.qts-cell${hh==="*"?"":".h"+hh}${ww==="*"?"":".w"+ww}`
-        );
+      style.innerHTML = styleMatch[1].replace(/coordinate\s+h:(\*|\d+);w:(\*|\d+)/gi,(_,hh,ww)=>
+        `.qts-cell${hh==="*"?"":".h"+hh}${ww==="*"?"":".w"+ww}`);
       document.head.appendChild(style);
     }
 
@@ -190,12 +168,11 @@ function copyCode(button) {
     document.querySelectorAll("qts").forEach(parseQTS);
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", parseAllQTS);
-  } else {
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",parseAllQTS);
+  }else{
     parseAllQTS();
   }
-
 })();
 </script>
 
