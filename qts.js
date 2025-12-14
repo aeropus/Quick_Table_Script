@@ -1,3 +1,11 @@
+/**
+ * qts.js – Aeropus Quick Table Grid Scripts
+ * Version: 0.2
+ * Author: Luković
+ * License: MIT
+ * Description: Wandelt <qts>-Tags oder externe .aeqts-Dateien in HTML-Grids um.
+ */
+
 (function () {
 
   function parseQTS(qtsEl, rawText = null) {
@@ -17,7 +25,7 @@
       .split("\n")
       .map(r => r.split(";").map(c => c.replace(/[\[\]]/g, "").trim()).filter(c => c.length > 0));
 
-    // Grid erzeugen
+    // Grid erstellen
     const grid = document.createElement("div");
     grid.className = "qts-grid";
     grid.style.display = "grid";
