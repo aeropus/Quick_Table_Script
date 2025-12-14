@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Aeropus QTS Demo</title>
+<script src="qts.js"></script>
+<style>
+body { font-family: system-ui, sans-serif; background: #121212; color: #eee; padding: 20px; }
+h1, h2 { color: #fff; }
+p { max-width: 800px; line-height: 1.6; }
+code { background: #222; padding: 2px 4px; border-radius: 4px; }
+select { margin: 10px 0; padding: 4px; border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<h1 id="title">Aeropus QTS – Quick Table Grid Scripts</h1>
+
+
+<label for="langSelect" id="labelLang">Sprache / Language:</label>
+<select id="langSelect">
+  <option value="DE">DE</option>
+  <option value="EN">EN</option>
+  <option value="ES">ES</option>
+  <option value="FR">FR</option>
+  <option value="IT">IT</option>
+  <option value="CZ">CZ</option>
+  <option value="PL">PL</option>
+  <option value="DK">DK</option>
+  <option value="NL">NL</option>
+  <option value="PT">PT</option>
+  <option value="TR">TR</option>
+  <option value="RO">RO</option>
+  <option value="SE">SE</option>
+  <option value="FI">FI</option>
+  <option value="EO">EO</option>
+  <option value="GR">GR</option>
+</select>
+<p id="desc">
+Mit <strong>QTS</strong> lassen sich Tabellen und Grids schnell und einfach definieren – direkt im HTML oder in externen <code>.aeqts</code>-Dateien.
+</p>
+
+<h2 id="section1">Funktionsweise:</h2>
+<ul id="listFeatures">
+  <li>Definiere ein Grid mit <code>grid h:X;w:Y</code> (Zeilen x Spalten)</li>
+  <li>Fülle die Zellen im <code>&lt;qts-content&gt;</code>-Block. Jede Zeile endet mit <code>;</code></li>
+  <li>Optional: Style bestimmte Zellen, Zeilen oder Spalten mit <code>&lt;qts-style&gt;</code> und Koordinaten <code>h:X;w:Y</code></li>
+  <li>Inline QTS wird automatisch beim Laden der Seite geparst</li>
+  <li>Externe QTS-Dateien können via <code>QTS.load("datei.aeqts")</code> geladen werden</li>
+</ul>
+
+<h2 id="section2">Inline QTS Beispiel:</h2>
+
+<qts>
+grid h:2;w:3
+
+<qts-content>
+[Name];[Alter];[Status];
+[Luković];[27];[Online];
+</qts-content>
+
+<qts-style>
+coordinate h:1;w:* { font-weight:bold; background:#111; color:white; }
+coordinate h:2;w:3 { color:lime; }
+</qts-style>
+</qts>
+
+<h2 id="section3">Erklärung:</h2>
+<p id="explanation">
+- Die erste Zeile <code>[Name];[Alter];[Status];</code> definiert die Kopfzeile.  
+- Jede nachfolgende Zeile enthält die Daten.  
+- Im <code>&lt;qts-style&gt;</code>-Block wird die Kopfzeile fett und dunkel hinterlegt, die Statuszelle grün eingefärbt.
+</p>
+
+<h2 id="section4">Externe .aeqts Demo:</h2>
+<p id="externalDesc">Die gleiche Tabelle kann auch aus einer externen Datei geladen werden:</p>
+
+<script>
+  QTS.load("demo.aeqts");
+</script>
+
+<p id="finalNote">Fertig! Du kannst jetzt beliebig viele Tabellen oder Menüs mit QTS erstellen – inline oder extern.</p>
+
+<script>
+const texts = {
+  DE: {
+    title: "Aeropus QTS – Quick Table Grid Scripts",
+    labelLang: "Sprache / Language:",
+    desc: "Mit QTS lassen sich Tabellen und Grids schnell und einfach definieren – direkt im HTML oder in externen .aeqts-Dateien.",
+    section1: "Funktionsweise:",
+    listFeatures: [
+      "Definiere ein Grid mit grid h:X;w:Y (Zeilen x Spalten)",
+      "Fülle die Zellen im <qts-content>-Block. Jede Zeile endet mit ;",
+      "Optional: Style bestimmte Zellen, Zeilen oder Spalten mit <qts-style> und Koordinaten h:X;w:Y",
+      "Inline QTS wird automatisch beim Laden der Seite geparst",
+      "Externe QTS-Dateien können via QTS.load(\"datei.aeqts\") geladen werden"
+    ],
+    section2: "Inline QTS Beispiel:",
+    section3: "Erklärung:",
+    explanation: "- Die erste Zeile [Name];[Alter];[Status]; definiert die Kopfzeile.\n- Jede nachfolgende Zeile enthält die Daten.\n- Im <qts-style>-Block wird die Kopfzeile fett und dunkel hinterlegt, die Statuszelle grün eingefärbt.",
+    section4: "Externe .aeqts Demo:",
+    externalDesc: "Die gleiche Tabelle kann auch aus einer externen Datei geladen werden:",
+    finalNote: "Fertig! Du kannst jetzt beliebig viele Tabellen oder Menüs mit QTS erstellen – inline oder extern."
+  },
+  EN: {
+    title: "Aeropus QTS – Quick Table Grid Scripts",
+    labelLang: "Language:",
+    desc: "QTS allows you to quickly and easily define tables and grids – directly in HTML or in external .aeqts files.",
+    section1: "How it works:",
+    listFeatures: [
+      "Define a grid with grid h:X;w:Y (rows x columns)",
+      "Fill cells in the <qts-content> block. Each line ends with ;",
+      "Optionally style specific cells, rows or columns with <qts-style> and coordinates h:X;w:Y",
+      "Inline QTS is automatically parsed when the page loads",
+      "External QTS files can be loaded via QTS.load(\"file.aeqts\")"
+    ],
+    section2: "Inline QTS Example:",
+    section3: "Explanation:",
+    explanation: "- The first line [Name];[Age];[Status]; defines the header row.\n- Each following line contains the data.\n- In the <qts-style> block the header row is bold and dark, the status cell is colored green.",
+    section4: "External .aeqts Demo:",
+    externalDesc: "The same table can also be loaded from an external file:",
+    finalNote: "Done! You can now create as many tables or menus with QTS – inline or external."
+  },
+  ES: {
+    title: "Aeropus QTS – Scripts de Tabla Rápida",
+    labelLang: "Idioma:",
+    desc: "QTS permite definir tablas y grids de manera rápida y sencilla – directamente en HTML o en archivos .aeqts externos.",
+    section1: "Cómo funciona:",
+    listFeatures: [
+      "Define un grid con grid h:X;w:Y (filas x columnas)",
+      "Rellena las celdas en el bloque <qts-content>. Cada línea termina con ;",
+      "Opcional: Estiliza celdas, filas o columnas específicas con <qts-style> y coordenadas h:X;w:Y",
+      "QTS inline se analiza automáticamente al cargar la página",
+      "Archivos QTS externos pueden cargarse con QTS.load(\"archivo.aeqts\")"
+    ],
+    section2: "Ejemplo de QTS Inline:",
+    section3: "Explicación:",
+    explanation: "- La primera línea [Nombre];[Edad];[Estado]; define la fila de encabezado.\n- Cada línea siguiente contiene los datos.\n- En el bloque <qts-style> la fila de encabezado se pone en negrita y oscuro, la celda de estado se colorea de verde.",
+    section4: "Demo de .aeqts externo:",
+    externalDesc: "La misma tabla también puede cargarse desde un archivo externo:",
+    finalNote: "¡Listo! Ahora puedes crear tantas tablas o menús con QTS como quieras – inline o externo."
+  },
+  FR: {
+    title: "Aeropus QTS – Scripts de Grille Rapide",
+    labelLang: "Langue:",
+    desc: "QTS permet de définir rapidement et facilement des tableaux et des grilles – directement dans HTML ou dans des fichiers .aeqts externes.",
+    section1: "Comment ça fonctionne :",
+    listFeatures: [
+      "Définir une grille avec grid h:X;w:Y (lignes x colonnes)",
+      "Remplir les cellules dans le bloc <qts-content>. Chaque ligne se termine par ;",
+      "Optionnel : styliser certaines cellules, lignes ou colonnes avec <qts-style> et coordonnées h:X;w:Y",
+      "QTS inline est automatiquement analysé au chargement de la page",
+      "Les fichiers QTS externes peuvent être chargés via QTS.load(\"fichier.aeqts\")"
+    ],
+    section2: "Exemple QTS Inline :",
+    section3: "Explication :",
+    explanation: "- La première ligne [Nom];[Âge];[Statut]; définit l'en-tête.\n- Chaque ligne suivante contient les données.\n- Dans le bloc <qts-style> l'en-tête est en gras et sombre, la cellule de statut est colorée en vert.",
+    section4: "Démo .aeqts externe :",
+    externalDesc: "Le même tableau peut également être chargé depuis un fichier externe :",
+    finalNote: "Terminé ! Vous pouvez maintenant créer autant de tableaux ou de menus avec QTS – inline ou externe."
+  }
+};
+  IT: {
+    title: "Aeropus QTS – Script di Tabelle Veloci",
+    labelLang: "Lingua:",
+    desc: "QTS consente di definire rapidamente e facilmente tabelle e griglie – direttamente in HTML o in file .aeqts esterni.",
+    section1: "Come funziona:",
+    listFeatures: [
+      "Definisci una griglia con grid h:X;w:Y (righe x colonne)",
+      "Compila le celle nel blocco <qts-content>. Ogni riga termina con ;",
+      "Opzionale: Stila celle, righe o colonne specifiche con <qts-style> e coordinate h:X;w:Y",
+      "QTS inline viene analizzato automaticamente al caricamento della pagina",
+      "File QTS esterni possono essere caricati con QTS.load(\"file.aeqts\")"
+    ],
+    section2: "Esempio QTS Inline:",
+    section3: "Spiegazione:",
+    explanation: "- La prima riga [Nome];[Età];[Stato]; definisce l'intestazione.\n- Ogni riga successiva contiene i dati.\n- Nel blocco <qts-style> l'intestazione è in grassetto e scura, la cella dello stato è verde.",
+    section4: "Demo .aeqts esterno:",
+    externalDesc: "La stessa tabella può essere caricata anche da un file esterno:",
+    finalNote: "Fatto! Ora puoi creare tutte le tabelle o menu che vuoi con QTS – inline o esterno."
+  },
+  CZ: {
+    title: "Aeropus QTS – Skripty Rychlé Tabulky",
+    labelLang: "Jazyk:",
+    desc: "QTS umožňuje rychle a snadno definovat tabulky a mřížky – přímo v HTML nebo v externích souborech .aeqts.",
+    section1: "Jak to funguje:",
+    listFeatures: [
+      "Definujte mřížku pomocí grid h:X;w:Y (řádky x sloupce)",
+      "Vyplňte buňky v bloku <qts-content>. Každý řádek končí ;",
+      "Volitelně stylujte konkrétní buňky, řádky nebo sloupce pomocí <qts-style> a souřadnic h:X;w:Y",
+      "Inline QTS se automaticky zpracuje při načtení stránky",
+      "Externí QTS soubory lze načíst pomocí QTS.load(\"soubor.aeqts\")"
+    ],
+    section2: "Příklad Inline QTS:",
+    section3: "Vysvětlení:",
+    explanation: "- První řádek [Jméno];[Věk];[Status]; definuje záhlaví.\n- Každý následující řádek obsahuje data.\n- V bloku <qts-style> je záhlaví tučné a tmavé, buňka se statusem je zelená.",
+    section4: "Demo externí .aeqts:",
+    externalDesc: "Stejnou tabulku lze načíst také z externího souboru:",
+    finalNote: "Hotovo! Nyní můžete vytvářet libovolné tabulky nebo menu s QTS – inline nebo externě."
+  },
+  PL: {
+    title: "Aeropus QTS – Skrypty Szybkiej Tabeli",
+    labelLang: "Język:",
+    desc: "QTS pozwala szybko i łatwo definiować tabele i siatki – bezpośrednio w HTML lub w zewnętrznych plikach .aeqts.",
+    section1: "Jak to działa:",
+    listFeatures: [
+      "Zdefiniuj siatkę za pomocą grid h:X;w:Y (wiersze x kolumny)",
+      "Wypełnij komórki w bloku <qts-content>. Każdy wiersz kończy się ;",
+      "Opcjonalnie: stylizuj konkretne komórki, wiersze lub kolumny za pomocą <qts-style> i współrzędnych h:X;w:Y",
+      "Inline QTS jest automatycznie analizowany przy ładowaniu strony",
+      "Zewnętrzne pliki QTS można załadować za pomocą QTS.load(\"plik.aeqts\")"
+    ],
+    section2: "Przykład QTS Inline:",
+    section3: "Wyjaśnienie:",
+    explanation: "- Pierwszy wiersz [Imię];[Wiek];[Status]; definiuje nagłówek.\n- Każdy kolejny wiersz zawiera dane.\n- W bloku <qts-style> nagłówek jest pogrubiony i ciemny, komórka statusu jest zielona.",
+    section4: "Demo zewnętrzne .aeqts:",
+    externalDesc: "Tę samą tabelę można również załadować z pliku zewnętrznego:",
+    finalNote: "Gotowe! Teraz możesz tworzyć dowolną liczbę tabel lub menu z QTS – inline lub zewnętrznie."
+  },
+  DK: {
+    title: "Aeropus QTS – Hurtig Tabel Scripts",
+    labelLang: "Sprog:",
+    desc: "QTS gør det hurtigt og nemt at definere tabeller og grids – direkte i HTML eller i eksterne .aeqts-filer.",
+    section1: "Sådan fungerer det:",
+    listFeatures: [
+      "Definer et grid med grid h:X;w:Y (rækker x kolonner)",
+      "Fyld celler i <qts-content> blokken. Hver linje slutter med ;",
+      "Valgfrit: Style specifikke celler, rækker eller kolonner med <qts-style> og koordinater h:X;w:Y",
+      "Inline QTS parses automatisk, når siden indlæses",
+      "Eksterne QTS-filer kan indlæses med QTS.load(\"fil.aeqts\")"
+    ],
+    section2: "Inline QTS Eksempel:",
+    section3: "Forklaring:",
+    explanation: "- Første linje [Navn];[Alder];[Status]; definerer overskriften.\n- Hver efterfølgende linje indeholder data.\n- I <qts-style>-blokken er overskriften fed og mørk, statuscellen er grøn.",
+    section4: "Ekstern .aeqts Demo:",
+    externalDesc: "Den samme tabel kan også indlæses fra en ekstern fil:",
+    finalNote: "Færdig! Du kan nu oprette så mange tabeller eller menuer med QTS – inline eller ekstern."
+  }
+  NL: {
+    title: "Aeropus QTS – Snelle Tabel Scripts",
+    labelLang: "Taal:",
+    desc: "Met QTS kun je snel en eenvoudig tabellen en grids definiëren – direct in HTML of in externe .aeqts-bestanden.",
+    section1: "Hoe het werkt:",
+    listFeatures: [
+      "Definieer een grid met grid h:X;w:Y (rijen x kolommen)",
+      "Vul de cellen in het <qts-content> blok. Elke regel eindigt met ;",
+      "Optioneel: Style specifieke cellen, rijen of kolommen met <qts-style> en coördinaten h:X;w:Y",
+      "Inline QTS wordt automatisch geparsed bij het laden van de pagina",
+      "Externe QTS-bestanden kunnen worden geladen met QTS.load(\"bestand.aeqts\")"
+    ],
+    section2: "Inline QTS Voorbeeld:",
+    section3: "Uitleg:",
+    explanation: "- De eerste regel [Naam];[Leeftijd];[Status]; definieert de koptekst.\n- Elke volgende regel bevat de data.\n- In het <qts-style>-blok is de koptekst vet en donker, de statuscel is groen.",
+    section4: "Externe .aeqts Demo:",
+    externalDesc: "Dezelfde tabel kan ook uit een extern bestand worden geladen:",
+    finalNote: "Klaar! Je kunt nu zoveel tabellen of menu's maken met QTS – inline of extern."
+  },
+  PT: {
+    title: "Aeropus QTS – Scripts de Tabela Rápida",
+    labelLang: "Idioma:",
+    desc: "O QTS permite definir tabelas e grids de forma rápida e fácil – diretamente no HTML ou em arquivos .aeqts externos.",
+    section1: "Como funciona:",
+    listFeatures: [
+      "Defina uma grade com grid h:X;w:Y (linhas x colunas)",
+      "Preencha as células no bloco <qts-content>. Cada linha termina com ;",
+      "Opcional: Estilize células, linhas ou colunas específicas com <qts-style> e coordenadas h:X;w:Y",
+      "QTS inline é automaticamente analisado quando a página é carregada",
+      "Arquivos QTS externos podem ser carregados via QTS.load(\"arquivo.aeqts\")"
+    ],
+    section2: "Exemplo QTS Inline:",
+    section3: "Explicação:",
+    explanation: "- A primeira linha [Nome];[Idade];[Status]; define o cabeçalho.\n- Cada linha seguinte contém os dados.\n- No bloco <qts-style> o cabeçalho é negrito e escuro, a célula de status é verde.",
+    section4: "Demo .aeqts externo:",
+    externalDesc: "A mesma tabela também pode ser carregada de um arquivo externo:",
+    finalNote: "Pronto! Agora você pode criar quantas tabelas ou menus quiser com QTS – inline ou externo."
+  },
+  TR: {
+    title: "Aeropus QTS – Hızlı Tablo Scriptleri",
+    labelLang: "Dil:",
+    desc: "QTS, tabloları ve ızgaraları hızlı ve kolay bir şekilde tanımlamanızı sağlar – HTML içinde veya harici .aeqts dosyalarında.",
+    section1: "Nasıl çalışır:",
+    listFeatures: [
+      "grid h:X;w:Y ile bir grid tanımlayın (satırlar x sütunlar)",
+      "<qts-content> bloğunda hücreleri doldurun. Her satır ; ile biter",
+      "Opsiyonel: Belirli hücreleri, satırları veya sütunları <qts-style> ve koordinatlar h:X;w:Y ile stilize edin",
+      "Inline QTS, sayfa yüklendiğinde otomatik olarak işlenir",
+      "Harici QTS dosyaları QTS.load(\"dosya.aeqts\") ile yüklenebilir"
+    ],
+    section2: "Inline QTS Örneği:",
+    section3: "Açıklama:",
+    explanation: "- İlk satır [İsim];[Yaş];[Durum]; başlık satırını tanımlar.\n- Takip eden her satır verileri içerir.\n- <qts-style> bloğunda başlık kalın ve koyu, durum hücresi yeşildir.",
+    section4: "Harici .aeqts Demo:",
+    externalDesc: "Aynı tablo harici bir dosyadan da yüklenebilir:",
+    finalNote: "Tamam! Artık QTS ile istediğiniz kadar tablo veya menü oluşturabilirsiniz – inline veya harici."
+  },
+  RO: {
+    title: "Aeropus QTS – Scripturi Tabelă Rapidă",
+    labelLang: "Limba:",
+    desc: "QTS permite definirea rapidă și ușoară a tabelelor și grilelor – direct în HTML sau în fișiere .aeqts externe.",
+    section1: "Cum funcționează:",
+    listFeatures: [
+      "Definește o grilă cu grid h:X;w:Y (rânduri x coloane)",
+      "Completează celulele în blocul <qts-content>. Fiecare linie se termină cu ;",
+      "Opțional: Stilizează celulele, rândurile sau coloanele specifice cu <qts-style> și coordonate h:X;w:Y",
+      "QTS inline este analizat automat la încărcarea paginii",
+      "Fișierele QTS externe pot fi încărcate prin QTS.load(\"fisier.aeqts\")"
+    ],
+    section2: "Exemplu QTS Inline:",
+    section3: "Explicație:",
+    explanation: "- Prima linie [Nume];[Vârstă];[Status]; definește rândul de antet.\n- Fiecare linie următoare conține datele.\n- În blocul <qts-style> antetul este îngroșat și întunecat, celula de status este verde.",
+    section4: "Demo .aeqts extern:",
+    externalDesc: "Aceeași tabelă poate fi încărcată și dintr-un fișier extern:",
+    finalNote: "Gata! Acum poți crea oricâte tabele sau meniuri dorești cu QTS – inline sau extern."
+  }
+  SE: {
+    title: "Aeropus QTS – Snabba Tabell Scripts",
+    labelLang: "Språk:",
+    desc: "Med QTS kan du snabbt och enkelt definiera tabeller och rutor – direkt i HTML eller i externa .aeqts-filer.",
+    section1: "Så fungerar det:",
+    listFeatures: [
+      "Definiera ett rutnät med grid h:X;w:Y (rader x kolumner)",
+      "Fyll celler i <qts-content>-blocket. Varje rad avslutas med ;",
+      "Valfritt: Formatera specifika celler, rader eller kolumner med <qts-style> och koordinater h:X;w:Y",
+      "Inline QTS tolkas automatiskt när sidan laddas",
+      "Externa QTS-filer kan laddas via QTS.load(\"fil.aeqts\")"
+    ],
+    section2: "Inline QTS Exempel:",
+    section3: "Förklaring:",
+    explanation: "- Första raden [Namn];[Ålder];[Status]; definierar rubrikraden.\n- Varje följande rad innehåller data.\n- I <qts-style>-blocket är rubriken fet och mörk, statuscellen är grön.",
+    section4: "Extern .aeqts Demo:",
+    externalDesc: "Samma tabell kan även laddas från en extern fil:",
+    finalNote: "Klart! Nu kan du skapa så många tabeller eller menyer med QTS – inline eller extern."
+  },
+  FI: {
+    title: "Aeropus QTS – Nopeat Taulukko Scriptit",
+    labelLang: "Kieli:",
+    desc: "QTS:n avulla voit määrittää taulukot ja ruudukot nopeasti ja helposti – suoraan HTML:ssä tai ulkoisissa .aeqts-tiedostoissa.",
+    section1: "Miten se toimii:",
+    listFeatures: [
+      "Määritä ruudukko grid h:X;w:Y (rivit x sarakkeet)",
+      "Täytä solut <qts-content>-lohkoon. Jokainen rivi päättyy ;",
+      "Valinnainen: Tyylittele tiettyjä soluja, rivejä tai sarakkeita <qts-style> ja koordinaatit h:X;w:Y avulla",
+      "Inline QTS analysoidaan automaattisesti sivun latautuessa",
+      "Ulkoiset QTS-tiedostot voidaan ladata QTS.load(\"tiedosto.aeqts\")"
+    ],
+    section2: "Inline QTS Esimerkki:",
+    section3: "Selitys:",
+    explanation: "- Ensimmäinen rivi [Nimi];[Ikä];[Tila]; määrittää otsikkorivin.\n- Jokainen seuraava rivi sisältää tiedot.\n- <qts-style>-lohkon otsikko on lihavoitu ja tumma, tilasolu on vihreä.",
+    section4: "Ulkoinen .aeqts Demo:",
+    externalDesc: "Sama taulukko voidaan myös ladata ulkoisesta tiedostosta:",
+    finalNote: "Valmista! Nyt voit luoda niin monta taulukkoa tai valikkoa kuin haluat QTS:llä – inline tai ulkoisesti."
+  },
+  EO: {
+    title: "Aeropus QTS – Rapidaj Tabloj Skriptoj",
+    labelLang: "Lingvo:",
+    desc: "QTS ebligas rapide kaj facile difini tabelojn kaj kradojn – rekte en HTML aŭ en eksteraj .aeqts-dosieroj.",
+    section1: "Kiel ĝi funkcias:",
+    listFeatures: [
+      "Difinu kradon kun grid h:X;w:Y (vicoj x kolumnoj)",
+      "Plenigu ĉelojn en la <qts-content> bloko. Ĉiu linio finiĝas per ;",
+      "Opcie: Stiligu specifajn ĉelojn, vicojn aŭ kolumnojn per <qts-style> kaj koordinatoj h:X;w:Y",
+      "Inline QTS estas aŭtomate prilaborata kiam la paĝo ŝargas",
+      "Eksteraj QTS-dosieroj povas esti ŝarĝitaj per QTS.load(\"dosiero.aeqts\")"
+    ],
+    section2: "Inline QTS Ekzemplo:",
+    section3: "Ekspliko:",
+    explanation: "- La unua linio [Nomo];[Aĝo];[Statuso]; difinas la kaplinion.\n- Ĉiu sekva linio enhavas la datumojn.\n- En la <qts-style> bloko la kaplinio estas grasa kaj malhela, la statusa ĉelo estas verda.",
+    section4: "Eksterna .aeqts Demo:",
+    externalDesc: "La sama tabelo povas ankaŭ esti ŝarĝita el eksterna dosiero:",
+    finalNote: "Faru! Nun vi povas krei tiom da tabeloj aŭ menuoj kiom vi volas per QTS – inline aŭ ekstere."
+  },
+  GR: {
+    title: "Aeropus QTS – Γρήγορα Σενάρια Πινάκων",
+    labelLang: "Γλώσσα:",
+    desc: "Το QTS σας επιτρέπει να ορίζετε πίνακες και πλέγματα γρήγορα και εύκολα – απευθείας στο HTML ή σε εξωτερικά αρχεία .aeqts.",
+    section1: "Πώς λειτουργεί:",
+    listFeatures: [
+      "Ορίστε ένα πλέγμα με grid h:X;w:Y (γραμμές x στήλες)",
+      "Συμπληρώστε τα κελιά στο μπλοκ <qts-content>. Κάθε γραμμή τελειώνει με ;",
+      "Προαιρετικά: Στυλιζάρετε συγκεκριμένα κελιά, γραμμές ή στήλες με <qts-style> και συντεταγμένες h:X;w:Y",
+      "Το Inline QTS αναλύεται αυτόματα κατά τη φόρτωση της σελίδας",
+      "Τα εξωτερικά αρχεία QTS μπορούν να φορτωθούν μέσω QTS.load(\"αρχειο.aeqts\")"
+    ],
+    section2: "Παράδειγμα Inline QTS:",
+    section3: "Εξήγηση:",
+    explanation: "- Η πρώτη γραμμή [Όνομα];[Ηλικία];[Κατάσταση]; ορίζει την κεφαλίδα.\n- Κάθε επόμενη γραμμή περιέχει τα δεδομένα.\n- Στο μπλοκ <qts-style> η κεφαλίδα είναι έντονη και σκούρα, το κελί κατάστασης είναι πράσινο.",
+    section4: "Demo εξωτερικού .aeqts:",
+    externalDesc: "Ο ίδιος πίνακας μπορεί επίσης να φορτωθεί από εξωτερικό αρχείο:",
+    finalNote: "Έτοιμο! Τώρα μπορείτε να δημιουργήσετε όσους πίνακες ή μενού θέλετε με QTS – inline ή εξωτερικά."
+  }
+};
+
+const langSelect = document.getElementById("langSelect");
+
+langSelect.addEventListener("change", () => {
+  const lang = langSelect.value;
+  const t = texts[lang];
+  if (!t) return;
+
+  // Update alle Texte auf der Seite
+  document.getElementById("title").innerText = t.title;
+  document.getElementById("labelLang").innerText = t.labelLang;
+  document.getElementById("desc").innerText = t.desc;
+  document.getElementById("section1").innerText = t.section1;
+  document.getElementById("section2").innerText = t.section2;
+  document.getElementById("section3").innerText = t.section3;
+  document.getElementById("explanation").innerText = t.explanation;
+  document.getElementById("section4").innerText = t.section4;
+  document.getElementById("externalDesc").innerText = t.externalDesc;
+  document.getElementById("finalNote").innerText = t.finalNote;
+
+  // Update Liste der Features
+  const ul = document.getElementById("listFeatures");
+  ul.innerHTML = "";
+  t.listFeatures.forEach(item => {
+    const li = document.createElement("li");
+    li.innerHTML = item;
+    ul.appendChild(li);
+  });
+});
+
+// Standard DE auswählen
+langSelect.value = "EN";
+</script>
+</body>
+</html>
